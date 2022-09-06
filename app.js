@@ -15,16 +15,13 @@ search.addEventListener('click',( )=>{
       
     let client_id='0dd1a517d2d7bbacd6d3';
     let client_secret='607e8f64e208a00bb2884e1f400aeb2d6a41fab4';
-    async function getDetails() {
-      
-    const response= await fetch(`https://api.github.com/search/users?q=${userInput}&client_id=${client_id}&client_secret=${client_secret}&per_page=6`);
-    if (response.status>=200 && response.status<=299 && response.ok) {
+    let url=`https://api.github.com/search/users?q=${userInput}&client_id=${client_id}&client_secret=${client_secret}&per_page=6`;
+    async function getDetails() { 
+      const response= await fetch(url);
       const responseArray= await response.json();
-    const data=responseArray.items;
-    ui.innerHTML='';
-    data.forEach(item => {
-      
-      console.log(item) 
+      const data=responseArray.items;
+      ui.innerHTML='';
+      data.forEach(item => {
       ui.innerHTML +=
       `
       <div class="profile_container">
@@ -41,15 +38,17 @@ search.addEventListener('click',( )=>{
        
     }); 
       input.innerText=``;
-    } else {
-      alert('error')
-    }
-    
-
-    }
-    getDetails();
+    } 
+    getDetails()
+    .catch(()=>{
+      ui.innerHTML=
+      `
+      <div class="alert">
+        <h3>There was an error, try later!</h3>
+      </div>`;
+    });
   }
 })
+
   
-    // let repo_count=5;
   
