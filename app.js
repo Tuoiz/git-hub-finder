@@ -3,16 +3,7 @@ let search=document.querySelector('.find');
 let input=document.querySelector('input');
 
 search.addEventListener('click',( )=>{ 
-  let userInput=input.value;
-  if (input.value===``) {
-    ui.innerHTML=
-      `
-      <div class="alert">
-        <h3>Please fill in a user!</h3>
-      </div>`;
-      
-  } else {
-      
+  let userInput=input.value;    
     let client_id='0dd1a517d2d7bbacd6d3';
     let client_secret='607e8f64e208a00bb2884e1f400aeb2d6a41fab4';
     let url=`https://api.github.com/search/users?q=${userInput}&client_id=${client_id}&client_secret=${client_secret}&per_page=6`;
@@ -34,21 +25,28 @@ search.addEventListener('click',( )=>{
           <img src="${item.avatar_url}" alt="" width="100px" height="100px">
         </div>
       </div>
-      =`;
-       
+      =`;   
     }); 
       input.innerText=``;
     } 
     getDetails()
     .catch(()=>{
-      ui.innerHTML=
+      if (input.value==='') {
+        ui.innerHTML=
+          `
+          <div class="alert">
+            <h3>Please fill in a user!</h3>
+          </div>`;
+      } 
+      else{
+        ui.innerHTML=
       `
       <div class="alert">
-        <h3>There was an error, try later!</h3>
+        <h3>Check your internet connection!</h3>
       </div>`;
+      } 
     });
   }
-})
+)
 
-  
   
